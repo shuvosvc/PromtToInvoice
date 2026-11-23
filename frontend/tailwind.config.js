@@ -98,11 +98,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('tailwind-studio')({
-    duration: '500ms',
-    delay: '1s',
-    iterationCount: '2'
-    })
-  ],
+  plugins: [],
 };
