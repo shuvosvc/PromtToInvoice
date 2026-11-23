@@ -264,24 +264,48 @@ const AppShell = ({ children }) => {
           </div>
         </aside>
         {/* mobile view */}
-        <div className={appShellStyles.mobileOverlay}>
+        <div
+          className={`lg:hidden fixed inset-0 z-50 transition-all duration-300 ${
+            mobileOpen
+              ? "opacity-100 pointer-events-auto visible"
+              : "opacity-0 pointer-events-none invisible"
+          }`}
+        >
           <div
-            className={appShellStyles.mobileBackdrop}
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setMobileOpen(false)}
           />
-          <div className={appShellStyles.mobileSidebar}>
+          <div
+            className={`absolute inset-y-0 left-0 w-80 max-w-[85vw] bg-white backdrop-blur-xl border-r border-gray-200/60 p-6 overflow-auto transform transition-transform duration-300 shadow-2xl z-10 ${
+              mobileOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
             <div className={appShellStyles.mobileHeader}>
-              <Link href='/' className={appShellStyles.mobileLogoLink}
-                onClick={() => setMobileOpen(false)}>
-                <img src="/logo.png" alt='logo' className={appShellStyles.mobileLogoImage} />
+              <Link
+                href="/"
+                className={appShellStyles.mobileLogoLink}
+                onClick={() => setMobileOpen(false)}
+              >
+                <img
+                  src="/logo.png"
+                  alt="logo"
+                  className={appShellStyles.mobileLogoImage}
+                />
                 <span className={appShellStyles.mobileLogoText}>
                   PromptToInvoice
                 </span>
               </Link>
-              <button onClick={() => setMobileOpen(false)} className={appShellStyles.mobileCloseButton}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMobileOpen(false);
+                }}
+                className="p-2 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-100 text-gray-600 transition-all cursor-pointer"
+                aria-label="Close sidebar"
               >
                 <svg
-                  className={appShellStyles.mobileCloseIcon}
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -297,10 +321,11 @@ const AppShell = ({ children }) => {
               <Link
                 onClick={() => setMobileOpen(false)}
                 href="/app/dashboard"
-                className={`${appShellStyles.mobileNavLink} ${isLinkActive("/app/dashboard")
+                className={`${appShellStyles.mobileNavLink} ${
+                  isLinkActive("/app/dashboard")
                     ? appShellStyles.mobileNavLinkActive
                     : appShellStyles.mobileNavLinkInactive
-                  }`}
+                }`}
               >
                 {" "}
                 <DashboardIcon /> Dashboard
@@ -308,10 +333,11 @@ const AppShell = ({ children }) => {
               <Link
                 onClick={() => setMobileOpen(false)}
                 href="/app/invoices"
-                className={`${appShellStyles.mobileNavLink} ${isLinkActive("/app/invoices")
+                className={`${appShellStyles.mobileNavLink} ${
+                  isLinkActive("/app/invoices")
                     ? appShellStyles.mobileNavLinkActive
                     : appShellStyles.mobileNavLinkInactive
-                  }`}
+                }`}
               >
                 {" "}
                 <InvoiceIcon /> Invoices
@@ -319,10 +345,11 @@ const AppShell = ({ children }) => {
               <Link
                 onClick={() => setMobileOpen(false)}
                 href="/app/create-invoice"
-                className={`${appShellStyles.mobileNavLink} ${isLinkActive("/app/create-invoice")
+                className={`${appShellStyles.mobileNavLink} ${
+                  isLinkActive("/app/create-invoice")
                     ? appShellStyles.mobileNavLinkActive
                     : appShellStyles.mobileNavLinkInactive
-                  }`}
+                }`}
               >
                 {" "}
                 <CreateIcon /> Create Invoice
@@ -330,27 +357,29 @@ const AppShell = ({ children }) => {
               <Link
                 onClick={() => setMobileOpen(false)}
                 href="/app/business"
-                className={`${appShellStyles.mobileNavLink} ${isLinkActive("/app/business")
+                className={`${appShellStyles.mobileNavLink} ${
+                  isLinkActive("/app/business")
                     ? appShellStyles.mobileNavLinkActive
                     : appShellStyles.mobileNavLinkInactive
-                  }`}
+                }`}
               >
                 {" "}
                 <ProfileIcon /> Business Profile
               </Link>
             </nav>
             <div className={appShellStyles.mobileLogoutSection}>
-              <button onClick={() => {
-                setMobileOpen(false);
-                logout();
-              }} className={appShellStyles.mobileLogoutButton}
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  logout();
+                }}
+                className={appShellStyles.mobileLogoutButton}
               >
                 <LogoutIcon /> Logout
               </button>
             </div>
           </div>
         </div>
-        {/* )} */}
         {/* Main Content  Navbar*/}
         <div className='flex-1 min-w-0' style={{
           position: "relative",
