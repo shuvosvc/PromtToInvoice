@@ -45,6 +45,21 @@ app.use(
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ limit: "20mb", extended: true }));
 
+// Normalize incoming path for Vercel serverless rewrites
+app.use((req, res, next) => {
+  if (req.url.startsWith("/server.js")) {
+    const original =
+      req.headers["x-vercel-matched-path"] ||
+      req.headers["x-matched-path"] ||
+      req.headers["x-forwarded-uri"] ||
+      req.headers["x-original-url"] ||
+      req.url.replace(/^\/server\.js/, "") ||
+      "/";
+    req.url = original;
+  }
+  next();
+});
+
 // Ensure DB connection on each serverless invocation
 app.use(async (req, res, next) => {
   try {
